@@ -4,6 +4,8 @@ import com.hdfclife.config.AppConfig;
 import com.hdfclife.factory.PolicyFactory;
 import com.hdfclife.model.Policy;
 import com.hdfclife.store.PolicyStore;
+import com.hdfclife.strategy.PremiumCalculator;
+import com.hdfclife.strategy.UlipPremiumStrategy;
 
 import java.util.*;
 
@@ -25,6 +27,12 @@ public class Main {
         store.getPolicyByNum("HDFC-LIFE-1004");
         store.getSortedPolicyNumbers();
         //store.
+        PremiumCalculator calculator = new PremiumCalculator();
+        calculator.setStrategy(new UlipPremiumStrategy());
+        int calculatedPremium = calculator.compute(42000);
+        System.out.println("ULIP premium for HDFC-LIFE-1002 -> " + calculatedPremium);
+
+
 
 //
 //        HashSet<String> customerName  = new HashSet<>();
