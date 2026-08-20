@@ -1,6 +1,7 @@
 package com.hdfclife.store;
 
 import com.hdfclife.exception.PolicyNotFoundException;
+import com.hdfclife.model.Claim;
 import com.hdfclife.model.Policy;
 
 import java.util.*;
@@ -9,7 +10,7 @@ public class PolicyStore {
 
     private final List<Policy> allPolicy = new ArrayList<>();
     private final Set<String> uniqueCustomer = new HashSet<>();
-    private final Map<String, Policy> policyLookup = new HashMap<>();
+    private static final Map<String, Policy> policyLookup = new HashMap<>();
     private final Map<String, Policy> sortedPolicy = new TreeMap<>();
 
     public void addPolicy(Policy policy){
@@ -19,7 +20,7 @@ public class PolicyStore {
         sortedPolicy.put(policy.getPolicyNo(), policy);
     }
 
-    public Policy getPolicyByNum(String policyNo){
+    public static Policy getPolicyByNum(String policyNo){
         Policy policy = policyLookup.get(policyNo);
         if(policy == null){
             throw new PolicyNotFoundException("Policy not found exception " + policyNo);
@@ -54,6 +55,15 @@ public class PolicyStore {
 
     public void getSortedPolicyNumbers(){
         System.out.println(sortedPolicy.keySet());
+    }
+
+    public Map<String, Policy> getPolicyMap() {
+        return policyLookup;
+    }
+    public static PriorityQueue<Claim> buildPriorityQueue(List<Claim> claims) {
+        PriorityQueue<Claim> pq = new PriorityQueue<>();
+        pq.addAll(claims);
+        return pq;
     }
 
 }
